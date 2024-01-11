@@ -5,13 +5,18 @@
 
 TArray<FColor> URenderTextureFunctionLibrary::ReadPixelBuffer(UTextureRenderTarget2D* RenderTarget)
 {
+	return ReadPixelBufferRect(RenderTarget, 0, 0, 0, 0);
+}
+
+TArray<FColor> URenderTextureFunctionLibrary::ReadPixelBufferRect(UTextureRenderTarget2D* RenderTarget, int32 X0, int32 Y0, int32 X1, int32 Y1)
+{
 	if (RenderTarget != nullptr)
 	{
 		TArray<FColor> ColorBuffer;
 		FTextureRenderTarget2DResource* TextureResource = StaticCast<FTextureRenderTarget2DResource*>(RenderTarget->Resource);
 		if (TextureResource != nullptr)
 		{
-			TextureResource->ReadPixels(ColorBuffer);
+			TextureResource->ReadPixels(ColorBuffer, FReadSurfaceDataFlags(RCM_UNorm, CubeFace_MAX), FIntRect(X0, Y0, X1, Y1));
 		}
 	}
 
@@ -21,13 +26,18 @@ TArray<FColor> URenderTextureFunctionLibrary::ReadPixelBuffer(UTextureRenderTarg
 
 TArray<FLinearColor> URenderTextureFunctionLibrary::ReadLinearPixelBuffer(UTextureRenderTarget2D* RenderTarget)
 {
+	return ReadLinearPixelBufferRect(RenderTarget, 0, 0, 0, 0);
+}
+
+TArray<FLinearColor> URenderTextureFunctionLibrary::ReadLinearPixelBufferRect(UTextureRenderTarget2D* RenderTarget, int32 X0, int32 Y0, int32 X1, int32 Y1)
+{
 	if (RenderTarget != nullptr)
 	{
 		TArray<FLinearColor> ColorBuffer;
 		FTextureRenderTarget2DResource* TextureResource = StaticCast<FTextureRenderTarget2DResource*>(RenderTarget->Resource);
 		if (TextureResource != nullptr)
 		{
-			TextureResource->ReadLinearColorPixels(ColorBuffer);
+			TextureResource->ReadLinearColorPixels(ColorBuffer, FReadSurfaceDataFlags(RCM_MinMax, CubeFace_MAX), FIntRect(X0, Y0, X1, Y1));
 		}
 
 		return ColorBuffer;

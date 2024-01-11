@@ -20,7 +20,13 @@ class SEARADIO_API URenderTextureFunctionLibrary : public UBlueprintFunctionLibr
 	static TArray<FColor> ReadPixelBuffer(UTextureRenderTarget2D* Texture);
 
 	UFUNCTION(BlueprintCallable, Category = "Utility")
+	static TArray<FColor> ReadPixelBufferRect(UTextureRenderTarget2D* Texture, int32 X0, int32 Y0, int32 X1, int32 Y1);
+
+	UFUNCTION(BlueprintCallable, Category = "Utility")
 	static TArray<FLinearColor> ReadLinearPixelBuffer(UTextureRenderTarget2D* RenderTarget);
+
+	UFUNCTION(BlueprintCallable, Category = "Utility")
+	static TArray<FLinearColor> ReadLinearPixelBufferRect(UTextureRenderTarget2D* RenderTarget, int32 X0, int32 Y0, int32 X1, int32 Y1);
 
 	UFUNCTION(BlueprintCallable, Category = "Utility")
 	static FColor ReadPixelFromBuffer(UPARAM(ref) TArray<FColor>& ColorBuffer, FVector2D UV, FIntPoint TargetSize);
